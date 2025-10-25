@@ -69,6 +69,15 @@
              "Build-Number" to (build ?: ""),
              "Build-Time" to buildTime.toString(),
              "Git-Branch" to gitBranch,
+@@ -285,7 +_,7 @@
+     mainClass.set("org.bukkit.craftbukkit.Main")
+     standardInput = System.`in`
+     workingDir = rootProject.layout.projectDirectory
+-        .dir(providers.gradleProperty("paper.runWorkDir").getOrElse("run"))
++        .dir(providers.gradleProperty("paper.runWorkDir").getOrElse("work"))
+         .asFile
+     javaLauncher.set(project.javaToolchains.launcherFor {
+         languageVersion.set(JavaLanguageVersion.of(21))
 @@ -356,7 +_,7 @@
  }
  
