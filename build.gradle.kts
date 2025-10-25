@@ -80,11 +80,11 @@ val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm
 val time: String = "${LocalDateTime.now().format(formatter)} UTC"
 
 /* minecraft version */
-val mcVersion = providers.gradleProperty("mcVersion")
+val mcVersion = providers.gradleProperty("mcVersion").get()
 
 val gitCommentFullHash: String by extra(grgit.head().id)
 val gitCommentHash: String by extra(grgit.head().abbreviatedId)
-val gitCommentMessage: String by extra(grgit.head().fullMessage)
+val gitCommentMessage: String by extra(grgit.head().shortMessage)
 githubRelease {
     token(System.getenv("GITHUB_TOKEN"))
     owner("TraiumMC")
