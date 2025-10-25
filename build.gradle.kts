@@ -82,6 +82,7 @@ val time: String = "${LocalDateTime.now().format(formatter)} UTC"
 /* minecraft version */
 val mcVersion = providers.gradleProperty("mcVersion").get()
 
+val gitBranchName: String = grgit.branch.current().name
 val gitCommentFullHash: String by extra(grgit.head().id)
 val gitCommentHash: String by extra(grgit.head().abbreviatedId)
 val gitCommentMessage: String by extra(grgit.head().shortMessage)
@@ -89,23 +90,25 @@ githubRelease {
     token(System.getenv("GITHUB_TOKEN"))
     owner("TraiumMC")
     repo("Tralux")
+    targetCommitish(gitBranchName)
+    releaseName("Tralux $mcVersion")
     tagName("$mcVersion-$gitCommentHash")
 
     val target = traluxPaperclipJarFile(project.layout.buildDirectory)
     releaseAssets(target)
 
     body("""
-        ### 📦 Version: `$mcVersion` | Commit: [$gitCommentHash](https://github.com/TraiumMC/Tralux/commit/$gitCommentFullHash)
-        ![download](https://img.shields.io/github/downloads/TraiumMC/Tralux/$mcVersion-$gitCommentHash/total?style=for-the-badge)
+    ### 📦 Version: `$mcVersion` | Commit: [$gitCommentHash](https://github.com/TraiumMC/Tralux/commit/$gitCommentFullHash)
+    ![download](https://img.shields.io/github/downloads/TraiumMC/Tralux/$mcVersion-$gitCommentHash/total?style=for-the-badge)
                      
-        > This release is automatically built by GitHub Actions.
+    > This release is automatically built by GitHub Actions.
                      
-        #### 📜 Latest Commit Message:
-        > $gitCommentMessage
+    #### 📜 Latest Commit Message:
+    > $gitCommentMessage
                      
-        #### 📊 Build Information:
-        - **Build Status**: ✅ Success
-        - **Build Date**: $time
+    #### 📊 Build Information:
+    - **Build Status**: ✅ Success
+    - **Build Date**: $time
     """.trimIndent())
 }
 
