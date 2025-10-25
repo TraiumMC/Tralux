@@ -1,0 +1,48 @@
+name: Deploy Tralux
+
+on:
+  push:
+    branches: [ "ver/1.21.10" ]
+    paths-ignore:
+      - .github/ISSUE_TEMPLATE/**/*
+      - README.md
+      - LICENSE.md
+      - .gitignore
+      - public/**/*
+      - .gitattributes
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: default
+
+    steps:
+      - name: Checkout Git
+        uses: actions/checkout@v5
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
+      - name: Setup Git Config
+        run: |
+          git config --global user.email "no-reply@github.com"
+          git config --global user.name "Github Actions"
+
+      - name: Apply Tralux Patches
+        run: |
+          chmod +x gradlew
+          ./gradlew applyAllPatches --no-configuration-cache
+
+      - name: Create Tralux Jar
+        run: ./gradlew createTraluxPaperclipJar --no-configuration-cache
+
+      - name: Publish Tralux Jar
+        run: ./gradlew githubRelease --no-configuration-cache
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
