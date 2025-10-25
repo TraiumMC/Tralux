@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Frish2021 <1573880184@qq.com>
+Date: Sat, 25 Oct 2025 21:37:51 +0800
+Subject: [PATCH] Rebased Paper to Tralux.
+
+
+diff --git a/src/main/java/io/papermc/paper/ServerBuildInfo.java b/src/main/java/io/papermc/paper/ServerBuildInfo.java
+index 652ff54e7c50412503725d628bfe72ed03059790..e1e84a6b5716292a1505a0556782eda96e09d9bd 100644
+--- a/src/main/java/io/papermc/paper/ServerBuildInfo.java
++++ b/src/main/java/io/papermc/paper/ServerBuildInfo.java
+@@ -19,6 +19,11 @@ public interface ServerBuildInfo {
+      */
+     Key BRAND_PAPER_ID = Key.key("papermc", "paper");
+ 
++    /**
++     * The brand id for Tralux.
++     */
++    Key BRAND_TRALUX_ID = Key.key("traiummc", "tralux");
++
+     /**
+      * Gets the {@code ServerBuildInfo}.
+      *

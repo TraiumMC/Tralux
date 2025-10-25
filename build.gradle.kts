@@ -1,5 +1,7 @@
 import StandardConstants.CREATE_MOJMAP_PAPERCLIP_TASK
+import StandardConstants.GITHUB_BASE_LINK
 import StandardConstants.SERVER_PROJECT_NAME
+import StandardConstants.SHIELDS_DOWNLOADS_BASE_LINK
 import io.papermc.paperweight.tasks.RebuildGitPatches
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
@@ -15,10 +17,22 @@ plugins {
 
 subprojects {
     apply(plugin = "java")
+    apply(plugin = "maven-publish")
+
+    extensions.configure<JavaPluginExtension> {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
+    }
 
     repositories {
         mavenCentral()
         maven("https://repo.papermc.io/repository/maven-public/")
+    }
+
+
+    dependencies {
+        "testRuntimeOnly"("org.junit.platform:junit-platform-launcher")
     }
 
     tasks.withType<AbstractArchiveTask>().configureEach {
@@ -98,8 +112,8 @@ githubRelease {
     releaseAssets(target)
 
     body("""
-    ### 📦 Version: `$mcVersion` | Commit: [$gitCommentHash](https://github.com/TraiumMC/Tralux/commit/$gitCommentFullHash)
-    ![download](https://img.shields.io/github/downloads/TraiumMC/Tralux/$mcVersion-$gitCommentHash/total?style=for-the-badge)
+    ### 📦 Version: `$mcVersion` | Commit: [$gitCommentHash]($GITHUB_BASE_LINK/commit/$gitCommentFullHash)
+    ![download]($SHIELDS_DOWNLOADS_BASE_LINK/$mcVersion-$gitCommentHash/total?style=for-the-badge)
                      
     > This release is automatically built by GitHub Actions.
                      
@@ -158,4 +172,12 @@ object StandardConstants {
     const val CREATE_MOJMAP_PAPERCLIP_TASK = "createMojmapPaperclipJar"
 
     const val SERVER_PROJECT_NAME = "tralux-server"
+
+    const val REPOSITORY_NAME = "TraiumMC/Tralux"
+
+    const val GITHUB_BASE_LINK = "https://github.com/$REPOSITORY_NAME"
+
+    const val SHIELDS_BASE_LINK = "https://img.shields.io"
+
+    const val SHIELDS_DOWNLOADS_BASE_LINK = "$SHIELDS_BASE_LINK/github/downloads/$REPOSITORY_NAME"
 }
