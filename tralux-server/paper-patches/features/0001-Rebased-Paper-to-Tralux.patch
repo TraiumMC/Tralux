@@ -29,6 +29,19 @@ index 74ffdc823e66fc5ec027c4b7c462382bcbfe2be2..b70ad16051d5471a79447ad301de7eb0
              SharedConstants.getCurrentVersion().id(),
              SharedConstants.getCurrentVersion().name(),
              getManifestAttribute(manifest, ATTRIBUTE_BUILD_NUMBER)
+diff --git a/src/main/java/io/papermc/paper/configuration/PaperConfigurations.java b/src/main/java/io/papermc/paper/configuration/PaperConfigurations.java
+index 940f60cd846107a82c1c523d73f9028b50a929d9..e422c4302821cf343779869c5181666910b7964b 100644
+--- a/src/main/java/io/papermc/paper/configuration/PaperConfigurations.java
++++ b/src/main/java/io/papermc/paper/configuration/PaperConfigurations.java
+@@ -92,7 +92,7 @@ public class PaperConfigurations extends Configurations<GlobalConfiguration, Wor
+     static final String GLOBAL_CONFIG_FILE_NAME = "paper-global.yml";
+     static final String WORLD_DEFAULTS_CONFIG_FILE_NAME = "paper-world-defaults.yml";
+     static final String WORLD_CONFIG_FILE_NAME = "paper-world.yml";
+-    public static final String CONFIG_DIR = "config";
++    public static final String CONFIG_DIR = "paper_config";
+     private static final String BACKUP_DIR ="legacy-backup";
+ 
+     private static final String GLOBAL_HEADER = String.format("""
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 index 774556a62eb240da42e84db4502e2ed43495be17..a823b6abbd1d4d4364c8ed02b80b78a4f81ee050 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java

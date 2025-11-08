@@ -2,6 +2,7 @@
 .idea/
 build/
 work/
+.kotlin/
 
 tralux-api/build.gradle.kts
 tralux-server/build.gradle.kts
