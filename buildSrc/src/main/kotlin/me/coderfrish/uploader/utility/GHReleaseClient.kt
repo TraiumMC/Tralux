@@ -6,7 +6,6 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import org.gradle.internal.impldep.org.bouncycastle.asn1.cms.CMSAttributes.contentType
 
 import java.io.File
 import java.io.IOException
@@ -58,22 +57,6 @@ class GHReleaseClient(private val token: String, private val baseUrl: String, pr
                 throw IOException("Failed to upload asset: " + response.body.string())
             }
             println("Asset uploaded successfully: " + file.getName())
-        }
-    }
-
-    fun fetchRepoBranch(owner: String, repo: String): String {
-        val repoUrl = "%$baseUrl/repos/$owner/$repo"
-        val request = Request.Builder().url(repoUrl).get()
-            .addHeader("Accept", "application/vnd.github.v3+json")
-            .addHeader("Authorization", "Bearer $token")
-            .build()
-
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) {
-                throw IOException("Failed to fetch repository branch: " + response.body.string())
-            }
-            val responseJson: JsonObject = gson.fromJson(response.body.string(), JsonObject::class.java)
-            return responseJson.get("default_branch").asString
         }
     }
 }

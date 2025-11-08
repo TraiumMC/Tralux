@@ -25,18 +25,13 @@ open class ReleaseTasks : DefaultTask() {
         Objects.requireNonNull(extension.tagName, "Tag name not be null.")
 
         val name = extension.name.getOrElse(extension.tagName.get())
-        val targetCommitish = extension.targetCommitish.getOrElse(
-            client.fetchRepoBranch(
-                repoOwner, repoName
-            )
-        )
 
         val request: GHReleaseRequest = GHReleaseRequest(
             extension.tagName.get(),
             name,
             extension.body.get(),
             extension.prorelease.get(),
-            targetCommitish,
+            extension.targetCommitish.get(),
             extension.makeLatest.get()
         )
 
