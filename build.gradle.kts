@@ -11,8 +11,8 @@ import java.time.format.DateTimeFormatter
 
 plugins {
     id("io.papermc.paperweight.patcher") version "2.0.0-beta.18"
-    id("com.github.breadmoirai.github-release") version "2.4.1"
     id("org.ajoberstar.grgit") version "5.0.0"
+    id("me.coderfrish.uploader")
 }
 
 subprojects {
@@ -100,30 +100,36 @@ val gitBranchName: String = grgit.branch.current().name
 val gitCommentFullHash: String by extra(grgit.head().id)
 val gitCommentHash: String by extra(grgit.head().abbreviatedId)
 val gitCommentMessage: String by extra(grgit.head().shortMessage)
-githubRelease {
-    token(System.getenv("GITHUB_TOKEN"))
-    owner("TraiumMC")
-    repo("Tralux")
-    targetCommitish(gitBranchName)
-    releaseName("Tralux $mcVersion")
-    tagName("$mcVersion-$gitCommentHash")
+uploader {
+    token = System.getenv("GITHUB_TOKEN")
+
+    repository {
+        owner = "TraiumMC"
+        name = "Tralux"
+    }
+
+    targetCommitish = gitBranchName
+    name = "Tralux $mcVersion"
+    tagName = "$mcVersion-$gitCommentHash"
+
+    prorelease = providers.gradleProperty("prerelease").get().toBoolean()
 
     val target = traluxPaperclipJarFile(project.layout.buildDirectory)
-    releaseAssets(target)
+    assets.add(target.get().asFile)
 
-    body("""
+    body = """
     ### 📦 Version: `$mcVersion` | Commit: [$gitCommentHash]($GITHUB_BASE_LINK/commit/$gitCommentFullHash)
     ![download]($SHIELDS_DOWNLOADS_BASE_LINK/$mcVersion-$gitCommentHash/total?style=for-the-badge)
-                     
+
     > This release is automatically built by GitHub Actions.
-                     
+
     #### 📜 Latest Commit Message:
     > $gitCommentMessage
-                     
+
     #### 📊 Build Information:
     - **Build Status**: ✅ Success
     - **Build Date**: $time
-    """.trimIndent())
+    """.trimIndent()
 }
 
 paperweight {
