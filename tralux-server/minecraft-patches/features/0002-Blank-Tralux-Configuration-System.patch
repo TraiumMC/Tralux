@@ -1,0 +1,21 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Frish2021 <1573880184@qq.com>
+Date: Sun, 9 Nov 2025 11:28:34 +0800
+Subject: [PATCH] Blank Tralux Configuration System.
+
+
+diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
+index dd05a184919dd4737dd0a0194b83eadb1adc4699..9b8db68446e6cbfb5fb4fd8a4784a325d32cac0f 100644
+--- a/net/minecraft/server/MinecraftServer.java
++++ b/net/minecraft/server/MinecraftServer.java
+@@ -1950,6 +1950,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+ 
+     @DontObfuscate
+     public String getServerModName() {
++        if (true) {
++            return me.coderfrish.tralux.configuration.GlobalConfiguration.get().brand;
++        }
++
+         return io.papermc.paper.ServerBuildInfo.buildInfo().brandName(); // Paper
+     }
+ 

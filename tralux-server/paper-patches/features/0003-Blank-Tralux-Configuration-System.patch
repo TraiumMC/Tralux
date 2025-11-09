@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Frish2021 <1573880184@qq.com>
+Date: Sun, 9 Nov 2025 11:28:34 +0800
+Subject: [PATCH] Blank Tralux Configuration System.
+
+
+diff --git a/src/main/java/io/papermc/paper/PaperBootstrap.java b/src/main/java/io/papermc/paper/PaperBootstrap.java
+index d543b1b107ab8d3eeb1fc3c1cadf489928d2786e..e8c5259555f541cbe284f085752d6f7e3aafde1a 100644
+--- a/src/main/java/io/papermc/paper/PaperBootstrap.java
++++ b/src/main/java/io/papermc/paper/PaperBootstrap.java
+@@ -18,7 +18,7 @@ public final class PaperBootstrap {
+ 
+         getStartupVersionMessages().forEach(LOGGER::info);
+ 
+-        Main.main(options);
++        me.coderfrish.tralux.TraluxBootstrap.bootstrap(options);
+     }
+ 
+     private static List<String> getStartupVersionMessages() {
+diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
+index 5bd6da467a1f536eb56c93ea00f98050cfaa36d0..df71ea387e5ab6826ae810d1ac13581a3bd309be 100644
+--- a/src/main/java/org/bukkit/craftbukkit/Main.java
++++ b/src/main/java/org/bukkit/craftbukkit/Main.java
+@@ -158,6 +158,12 @@ public class Main {
+                         .defaultsTo(new File("paper.yml"))
+                         .describedAs("Yml file");
+ 
++                this.acceptsAll(asList("tralux-dir", "tralux-settings-directory"), "Directory for Tralux settings")
++                        .withRequiredArg()
++                        .ofType(File.class)
++                        .defaultsTo(new File(me.coderfrish.tralux.configuration.TraluxConfiguration.TRALUX_CONFIG_FOLDER))
++                        .describedAs("Config directory");
++
+                 this.acceptsAll(asList("add-plugin", "add-extra-plugin-jar"), "Specify paths to extra plugin jars to be loaded in addition to those in the plugins folder. This argument can be specified multiple times, once for each extra plugin jar path.")
+                         .withRequiredArg()
+                         .ofType(File.class)
