@@ -49,11 +49,12 @@
      implementation("ca.spottedleaf:concurrentutil:0.0.5")
      implementation("org.jline:jline-terminal-ffm:3.27.1") // use ffm on java 22+
      implementation("org.jline:jline-terminal-jni:3.27.1") // fall back to jni on java 21
-@@ -152,6 +_,7 @@
+@@ -152,6 +_,8 @@
      implementation("org.apache.logging.log4j:log4j-iostreams:2.24.1")
      implementation("org.ow2.asm:asm-commons:9.8")
      implementation("org.spongepowered:configurate-yaml:4.2.0")
-+    implementation("org.spongepowered:configurate-hocon:4.2.0")
++    implementation("io.github.classgraph:classgraph:4.8.181")
++    implementation("com.electronwill.night-config:toml:3.6.6")
  
      // Deps that were previously in the API but have now been moved here for backwards compat, eventually to be removed
      runtimeOnly("commons-lang:commons-lang:2.6")

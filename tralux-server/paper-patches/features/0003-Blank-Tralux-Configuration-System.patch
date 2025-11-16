@@ -5,20 +5,34 @@ Subject: [PATCH] Blank Tralux Configuration System.
 
 
 diff --git a/src/main/java/io/papermc/paper/PaperBootstrap.java b/src/main/java/io/papermc/paper/PaperBootstrap.java
-index d543b1b107ab8d3eeb1fc3c1cadf489928d2786e..e8c5259555f541cbe284f085752d6f7e3aafde1a 100644
+index d543b1b107ab8d3eeb1fc3c1cadf489928d2786e..1d4a1644f616a21b648df0b5488750a1501c8a72 100644
 --- a/src/main/java/io/papermc/paper/PaperBootstrap.java
 +++ b/src/main/java/io/papermc/paper/PaperBootstrap.java
-@@ -18,7 +18,7 @@ public final class PaperBootstrap {
+@@ -3,7 +3,6 @@ package io.papermc.paper;
+ import java.util.List;
+ import joptsimple.OptionSet;
+ import net.minecraft.SharedConstants;
+-import net.minecraft.server.Main;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
+@@ -13,12 +12,12 @@ public final class PaperBootstrap {
+     private PaperBootstrap() {
+     }
+ 
+-    public static void boot(final OptionSet options) {
++    public static void boot(final OptionSet options) throws Exception {
+         SharedConstants.tryDetectVersion();
  
          getStartupVersionMessages().forEach(LOGGER::info);
  
 -        Main.main(options);
-+        me.coderfrish.tralux.TraluxBootstrap.bootstrap(options);
++        me.coderfrish.tralux.core.TraluxBootstrap.bootstrap(options);
      }
  
      private static List<String> getStartupVersionMessages() {
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 5bd6da467a1f536eb56c93ea00f98050cfaa36d0..df71ea387e5ab6826ae810d1ac13581a3bd309be 100644
+index 5bd6da467a1f536eb56c93ea00f98050cfaa36d0..f9accbe4a6dd3c859505f8f0d45845c8ee675b17 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -158,6 +158,12 @@ public class Main {
@@ -28,7 +42,7 @@ index 5bd6da467a1f536eb56c93ea00f98050cfaa36d0..df71ea387e5ab6826ae810d1ac13581a
 +                this.acceptsAll(asList("tralux-dir", "tralux-settings-directory"), "Directory for Tralux settings")
 +                        .withRequiredArg()
 +                        .ofType(File.class)
-+                        .defaultsTo(new File(me.coderfrish.tralux.configuration.TraluxConfiguration.TRALUX_CONFIG_FOLDER))
++                        .defaultsTo(me.coderfrish.tralux.config.TraluxConfiguration.traluxConfigFolder.toFile())
 +                        .describedAs("Config directory");
 +
                  this.acceptsAll(asList("add-plugin", "add-extra-plugin-jar"), "Specify paths to extra plugin jars to be loaded in addition to those in the plugins folder. This argument can be specified multiple times, once for each extra plugin jar path.")

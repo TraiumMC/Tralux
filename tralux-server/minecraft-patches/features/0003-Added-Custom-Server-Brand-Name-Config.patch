@@ -1,0 +1,20 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Frish2021 <1573880184@qq.com>
+Date: Sun, 16 Nov 2025 22:27:52 +0800
+Subject: [PATCH] Added Custom Server Brand Name Config.
+
+
+diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
+index 33f39ab606752b12561ff820be1d5de62dff11b9..58beb2e59e1c4294b6bfbc6504bbd4de8a8c61ba 100644
+--- a/net/minecraft/server/MinecraftServer.java
++++ b/net/minecraft/server/MinecraftServer.java
+@@ -1950,6 +1950,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+ 
+     @DontObfuscate
+     public String getServerModName() {
++        if (true)
++            return me.coderfrish.tralux.core.configs.misc.ServerBrandConfig.value;
++
+         return io.papermc.paper.ServerBuildInfo.buildInfo().brandName(); // Paper
+     }
+ 
